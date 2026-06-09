@@ -1,17 +1,21 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [themeMode, setThemeMode] = useState('light');
-  const [currency, setCurrency] = useState('USD');
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setThemeMode(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ themeMode, toggleTheme }),
+    [themeMode, toggleTheme]
+  );
 
   return (
-    <AppContext.Provider value={{ themeMode, toggleTheme, currency, setCurrency }}>
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   );

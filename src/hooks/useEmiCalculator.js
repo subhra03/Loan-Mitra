@@ -1,8 +1,10 @@
-const useEmiCalculator = (principal, rate, months) => {
-    const r = rate / 12 / 100;
-    const emi = (principal * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
-    return emi || 0;
-  };
-  
-  export default useEmiCalculator;
-  
+import { useMemo } from 'react';
+import { calculateEmi } from '../utils/loanCalculations';
+
+const useEmiCalculator = (principal, rate, months) =>
+  useMemo(
+    () => calculateEmi(principal, rate, months),
+    [principal, rate, months]
+  );
+
+export default useEmiCalculator;

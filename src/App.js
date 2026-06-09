@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { AppProvider, AppContext } from './context/AppContext';
@@ -10,7 +10,7 @@ import ErrorPage from './pages/ErrorPage';
 
 const ThemedApp = () => {
   const { themeMode } = useContext(AppContext);
-  const theme = getTheme(themeMode);
+  const theme = useMemo(() => getTheme(themeMode), [themeMode]);
 
   return (
     <ThemeProvider theme={theme}>
